@@ -1,6 +1,6 @@
 import express from 'express'
 const app = express()
-const port = process.env.port || 3000
+const PORT = process.env.PORT || 3000
 app.use(express.json()) //use for parse data in json format 
 
 
@@ -42,6 +42,6 @@ app.delete('/post', (req, res) => {
   res.send('Here is your food')
 })
 
-app.listen(port, () => {
-  console.log(`app listening at ${port}`)
+app.listen(PORT, () => {
+  console.log(`app listening at ${PORT}`)
 })
