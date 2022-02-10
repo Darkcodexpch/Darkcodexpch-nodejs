@@ -69,15 +69,13 @@ app.get('/posts', (req, res) => {
 })
 
 // for getting single post from server
-app.get('/post:id', (req, res) => {
+app.get('/post/:id', (req, res) => {
   Post.findOne({ _id: req.params.id }, (err, data) => {
-    if (!err) {
-      res.send(data);
-
-    }
-    else {
-      res.status(500).send("Something went Wrong")
-    }
+      if (!err) {
+          res.send(data);
+      } else {
+          res.status(500).send("something went wrong")
+      }
   })
 })
 
@@ -103,13 +101,33 @@ app.post('/post', (req, res) => {
 
 // for updating record
 
-app.put('/post', (req, res) => {
-  res.send('Here is your food')
+app.put('/post/:id', (req, res) => {
+  Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { text: req.body.text },
+      {},
+      (err, data) => {
+          if (!err) {
+              res.send("updated");
+          } else {
+              res.status(500).send("something went wrong")
+          }
+      }
+  );
 })
 
 // for deleting records
-app.delete('/post', (req, res) => {
-  res.send('Here is your food')
+app.delete('/post/:id', (req, res) => {
+  Post.deleteOne(
+      { _id: req.params.id },
+      {},
+      (err, data) => {
+          if (!err) {
+              res.send("deleted")
+          } else {
+              res.status(500).send("something went wrong")
+          }
+      });
 })
 
 app.listen(PORT, () => {
